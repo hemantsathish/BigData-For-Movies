@@ -22,7 +22,7 @@ df3 = file3.drop(*drop_cols3)
 #df3.show()
 
 joined_table = df2.join(df3, ['user_id'])
-joined_table.show()
+joined_table.dropDuplicates().show()
 
 #final_table = joined_table.join(df1, ['movie_id'])
 #final_table.show()
