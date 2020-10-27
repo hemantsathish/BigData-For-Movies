@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql import Row
+from pyspark.sql import functions as func
 
 # Create a SparkSession
 spark = SparkSession.builder.appName("SparkSQL").getOrCreate()
@@ -21,10 +22,13 @@ df2 = file2.drop(*drop_cols2)
 df3 = file3.drop(*drop_cols3)
 #df3.show()
 
-joined_table = df2.join(df3, ['user_id'])
-joined_table.dropDuplicates().show()
+joined_table = df2.join(df3, ['user_id']).dropDuplicates()
+#joined_table.show()
 
 #final_table = joined_table.join(df1, ['movie_id'])
 #final_table.show()
+
+mostRated = joined_table.groupby('movie_id').count().orderBy(func.desc("count"))
+mostRated.show()
 
 spark.stop()
