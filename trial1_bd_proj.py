@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql import Row
 from pyspark.sql import functions as func
+from pyspark.sql.functions import broadcast
 
 # Create a SparkSession
 spark = SparkSession.builder.appName("SparkSQL").getOrCreate()
@@ -29,6 +30,6 @@ joined_table = df2.join(df3, ['user_id']).dropDuplicates()
 #final_table.show()
 
 mostRated = joined_table.groupby('movie_id').count().orderBy(func.desc("count"))
-mostRated.show()
+mostRated.join(broadcast(df1), ['movie_id']).show()
 
 spark.stop()
