@@ -30,6 +30,11 @@ joined_table = df2.join(df3, ['user_id']).dropDuplicates()
 #final_table.show()
 
 mostRated = joined_table.groupby('movie_id').count().orderBy(func.desc("count"))
-mostRated.join(broadcast(df1), ['movie_id']).show()
+#mostRated.join(broadcast(df1), ['movie_id']).show()
+
+def details(df):
+  df.join(broadcast(df1), ['movie_id']).show()
+  
+details(mostRated)
 
 spark.stop()
