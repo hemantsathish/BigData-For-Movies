@@ -44,5 +44,9 @@ mean_rating = mean_rating.where(mean_rating['count(rating_score)'] > 100)
 mean_rating= mean_rating.join(df1, ['movie_id'])
 mean_rating.orderBy("avg(rating_score)", ascending=False).show()
 
+#YEAR WITH BEST MOVIES
+best_year = mean_rating.groupBy('movie_release_year').agg(func.mean('avg(rating_score)'), func.count('movie_release_year'))
+best_year = best_year.where(best_year['count(movie_release_year)'] > 100)
+best_year.orderBy("avg(avg(rating_score))", ascending=False).show()
 
 spark.stop()
