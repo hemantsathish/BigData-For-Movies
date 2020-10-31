@@ -40,7 +40,7 @@ df2 = df2.withColumn('movie_id', df2['movie_id'].cast(IntegerType()))
 df2.na.drop("any")
 mean_rating = df2.groupBy('movie_id').agg(func.mean('rating_score'), func.count('rating_score'))
 mean_rating = mean_rating.orderBy('avg(rating_score)', ascending=False)
-mean_rating = mean_rating.where(mean_rating['count(rating_score)'] > 50)
+mean_rating = mean_rating.where(mean_rating['count(rating_score)'] > 100)
 mean_rating= mean_rating.join(df1, ['movie_id'])
 mean_rating.orderBy("avg(rating_score)", ascending=False).show()
 
