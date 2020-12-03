@@ -59,11 +59,6 @@ def details(df):
   
 #function with query for most rated movie
 def mostRatedMovie():
-	#mostRated = joined_table.groupby('movie_id').count().orderBy(func.desc("count"))
-	#mostRated.show()
-	#mostRated = details(mostRated)
-	#mostRated.orderBy(func.desc("count"))
-	#mostRated.join(broadcast(df1), ['movie_id']).show()
 	mostRated = final_table.groupby('movie_id').count().orderBy(func.desc("count"))
 	mostRated = mostRated.join(df1, ['movie_id'])
 	mostRated = mostRated.orderBy("count", ascending=False)
